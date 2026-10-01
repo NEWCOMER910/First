@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git 十四天学习路线 · 大一新生版</title>
+<style>
+  :root{
+    --bg:#faf9f7; --surface:#ffffff; --line:#e3e0da; --line2:#cfccc4;
+    --ink:#23221f; --ink2:#5f5e5a; --ink3:#888780;
+    --blue-bg:#e6f1fb; --blue-line:#185fa5; --blue-ink:#0c447c;
+    --teal-bg:#e1f5ee; --teal-line:#0f6e56; --teal-ink:#085041;
+    --amber-bg:#faeeda; --amber-line:#854f0b;
+    --red-bg:#fcebeb; --red-line:#a32d2d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:48px 24px 80px;}
+  h1{font-size:27px; font-weight:600; margin:0 0 10px; letter-spacing:-0.2px;}
+  h2{font-size:19px; font-weight:600; margin:56px 0 16px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  h3{font-size:16px; font-weight:600; margin:28px 0 10px;}
+  p{margin:0 0 14px; color:var(--ink);}
+  .lede{font-size:16px; color:var(--ink2); margin:0 0 18px;}
+  code{font-family:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",monospace; font-size:13px;
+    background:#f1efe8; color:#444441; padding:1px 6px; border-radius:5px;}
+  pre{background:#f1efe8; border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+    overflow-x:auto; font-size:13px; line-height:1.7; margin:12px 0 18px;}
+  pre code{background:none; padding:0; color:#23221f;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 4px;}
+  .chip{background:var(--surface); border:1px solid var(--line); border-radius:999px;
+    padding:4px 13px; font-size:13px; color:var(--ink2);}
+  .chip b{color:var(--ink); font-weight:600;}
+
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:18px 0;}
+  .stage{display:flex; gap:14px; align-items:flex-start;}
+  .badge{flex:none; width:38px; height:38px; border-radius:10px; display:flex; align-items:center;
+    justify-content:center; font-size:15px; font-weight:600;}
+  .b1,.b2{background:var(--blue-bg); color:var(--blue-ink);}
+  .b3,.b4{background:var(--teal-bg); color:var(--teal-ink);}
+  .stage h3{margin:4px 0 4px;}
+  .meta{font-size:13px; color:var(--ink3); margin:0 0 12px;}
+  .grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin:14px 0;}
+  .box{background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .box .lbl{font-size:12px; color:var(--ink3); letter-spacing:0.4px; margin:0 0 6px;}
+  .box ul{margin:0; padding-left:18px;}
+  .box li{margin:3px 0; font-size:14px;}
+  .check{list-style:none; padding:0; margin:8px 0 0;}
+  .check li{padding-left:26px; position:relative; margin:7px 0; font-size:14px;}
+  .check li::before{content:""; position:absolute; left:0; top:6px; width:13px; height:13px;
+    border:1.5px solid var(--teal-line); border-radius:4px;}
+
+  table{width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; background:var(--surface);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  th{background:#f1efe8; text-align:left; font-weight:600; font-size:13px; color:var(--ink2);
+    padding:11px 14px; border-bottom:1px solid var(--line);}
+  td{padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td code{white-space:nowrap;}
+
+  .note{border-left:3px solid var(--amber-line); background:var(--amber-bg);
+    border-radius:0 10px 10px 0; padding:14px 18px; margin:18px 0; font-size:14px;}
+  .warn{border-left:3px solid var(--red-line); background:var(--red-bg);
+    border-radius:0 10px 10px 0; padding:14px 18px; margin:18px 0; font-size:14px;}
+  .note p:last-child,.warn p:last-child{margin-bottom:0;}
+
+  .flow{display:flex; align-items:stretch; gap:10px; margin:20px 0; flex-wrap:wrap;}
+  .fnode{flex:1 1 150px; border-radius:12px; padding:14px; border:1px solid;}
+  .fnode .t{font-weight:600; font-size:14px;} .fnode .s{font-size:12px; margin-top:2px;}
+  .farw{flex:0 0 26px; display:flex; align-items:center; justify-content:center; color:var(--ink3); font-size:15px;}
+
+  .dayline{display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1px dashed var(--line); font-size:14px;}
+  .dayline:last-child{border-bottom:none;}
+  .dayline .d{flex:none; width:56px; font-weight:600; font-size:13px; color:var(--ink2);}
+  .dayline input{width:17px; height:17px; accent-color:#0f6e56; flex:none; cursor:pointer;}
+  .dayline label{flex:1; cursor:pointer;}
+  input:checked + label{color:var(--ink3); text-decoration:line-through;}
+
+  footer{margin-top:56px; padding-top:18px; border-top:1px solid var(--line); font-size:13px; color:var(--ink3);}
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 60px;} h1{font-size:23px;} .farw{display:none;}
+    table{font-size:13px;} th,td{padding:9px 10px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Git 十四天学习路线</h1>
+<p class="lede">给大一新生的时间盒版本：每天 45–60 分钟，十四天累计约 11 小时，学完能独立用 Git 管作业、写脚本、带小组项目。</p>
+<div class="chips">
+  <span class="chip">总时长 <b>≈ 11 小时</b></span>
+  <span class="chip">节奏 <b>每天 45–60 分钟</b></span>
+  <span class="chip">核心命令 <b>9 个</b></span>
+  <span class="chip">结业标准 <b>独立完成一次小组协作</b></span>
+</div>
+
+<div class="note">
+  <p><b>先建立一个心智模型，再背命令。</b>Git 只有四个区域：工作区 → 暂存区 → 本地仓库 → 远程仓库。
+  所有命令本质上都是"把改动从一个区搬到另一个区"。看懂这条链路，命令就不会记混。</p>
+</div>
+
+<h2>一、为什么大一就要学 Git</h2>
+<p>不是为了写代码才需要 Git。对你来说，它解决的是这四类很具体的事：</p>
+<table>
+  <tr><th style="width:28%">你正在经历的事</th><th>没有 Git 的痛苦</th><th style="width:30%">有 Git 之后</th></tr>
+  <tr><td>课程论文 / 实验报告改 N 版</td><td>文件夹里躺着"报告_final2_最终版真的最终.docx"</td><td>一条时间线，随时回到任意一版，还能看出改了什么</td></tr>
+  <tr><td>Python 数据处理脚本</td><td>改完跑不通了，却回不到昨天能跑的那一版</td><td>每次能跑就 <code>commit</code>，脚本与结果一一对应，可复现</td></tr>
+  <tr><td>小组作业 / 大创 / URF</td><td>微信互传压缩包，最后人工合并，谁改了什么全靠记</td><td>每人一个分支，PR 合并，改动可追溯、可回滚</td></tr>
+  <tr><td>大二大三找实习 / 推免材料</td><td>拿不出能证明自己做过什么的东西</td><td>GitHub 主页就是作品集，commit 记录是真实履历</td></tr>
+</table>
+<p>海洋、地学这类专业越往后越依赖脚本处理和团队协作，Git 属于"早学两周、省四年事"的典型。</p>
+
+<h2>二、路线总览</h2>
+<div class="flow">
+  <div class="fnode" style="background:var(--blue-bg);border-color:var(--blue-line)">
+    <div class="t" style="color:var(--blue-ink)">① 本地仓库</div>
+    <div class="s" style="color:var(--blue-ink)">Day 1–3 · 2.5h · 一个人的后悔药</div>
+  </div>
+  <div class="farw">→</div>
+  <div class="fnode" style="background:var(--blue-bg);border-color:var(--blue-line)">
+    <div class="t" style="color:var(--blue-ink)">② 分支并行</div>
+    <div class="s" style="color:var(--blue-ink)">Day 4–6 · 2.5h · 敢放心折腾</div>
+  </div>
+  <div class="farw">→</div>
+  <div class="fnode" style="background:var(--teal-bg);border-color:var(--teal-line)">
+    <div class="t" style="color:var(--teal-ink)">③ 远程协作</div>
+    <div class="s" style="color:var(--teal-ink)">Day 7–10 · 3h · 和别人一起写</div>
+  </div>
+  <div class="farw">→</div>
+  <div class="fnode" style="background:var(--teal-bg);border-color:var(--teal-line)">
+    <div class="t" style="color:var(--teal-ink)">④ 真实项目</div>
+    <div class="s" style="color:var(--teal-ink)">Day 11–14 · 3h · 用起来才算学会</div>
+  </div>
+</div>
+
+<h2>三、四阶段详解</h2>
+
+<div class="card">
+  <div class="stage">
+    <div class="badge b1">①</div>
+    <div style="flex:1">
+      <h3>本地仓库：一个人的版本管理</h3>
+      <p class="meta">Day 1–3 · 约 2.5 小时 · 目标：建立"提交快照"的习惯</p>
+      <div class="grid2">
+        <div class="box">
+          <p class="lbl">要掌握的命令</p>
+          <ul>
+            <li><code>git init</code> 建仓库</li>
+            <li><code>git status</code> 看当前状态（最常用）</li>
+            <li><code>git add</code> 放进暂存区</li>
+            <li><code>git commit -m</code> 提交快照</li>
+            <li><code>git log --oneline</code> 看历史</li>
+            <li><code>git diff</code> 看改了什么</li>
+            <li><code>.gitignore</code> 忽略文件</li>
+          </ul>
+        </div>
+        <div class="box">
+          <p class="lbl">动手任务（必做）</p>
+          <ul>
+            <li>新建一个文件夹，写一份 Markdown 笔记，连做 5 次提交</li>
+            <li>故意删掉一段内容，再用 <code>git restore</code> 找回来</li>
+            <li>写 <code>.gitignore</code>，忽略 <code>__pycache__/</code>、<code>.DS_Store</code>、大文件</li>
+            <li>用 <code>git diff</code> 对比两次提交之间差了什么</li>
+          </ul>
+        </div>
+      </div>
+      <p class="lbl" style="font-size:12px;color:var(--ink3);margin:14px 0 0">验收标准</p>
+      <ul class="check">
+        <li>能口述工作区 / 暂存区 / 本地仓库三个区分别装了什么</li>
+        <li>能在 <code>git log</code> 里定位并恢复到任意一次提交</li>
+        <li>commit 信息写的是"做了什么 + 为什么"，不是"修改"</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="stage">
+    <div class="badge b2">②</div>
+    <div style="flex:1">
+      <h3>分支与回退：敢放心折腾</h3>
+      <p class="meta">Day 4–6 · 约 2.5 小时 · 目标：把"实验"和"成品"隔开</p>
+      <div class="grid2">
+        <div class="box">
+          <p class="lbl">要掌握的命令</p>
+          <ul>
+            <li><code>git branch</code> / <code>git switch</code> 开分支</li>
+            <li><code>git merge</code> 合并分支</li>
+            <li>读懂并解决冲突（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>）</li>
+            <li><code>git stash</code> 临时存草稿</li>
+            <li><code>git reset --soft / --hard</code> 回退</li>
+            <li><code>git revert</code> 反向提交（已推送时用）</li>
+            <li><code>git reflog</code> 终极后悔药</li>
+          </ul>
+        </div>
+        <div class="box">
+          <p class="lbl">动手任务（必做）</p>
+          <ul>
+            <li>从 main 开一个 <code>feat-</code> 分支，改同一行制造冲突，然后手工解决</li>
+            <li>改到一半要切分支，用 <code>git stash</code> 存起来再 <code>stash pop</code></li>
+            <li><code>reset --hard</code> 回退一次提交，再用 <code>reflog</code> 把它找回来</li>
+            <li>理解 reset 和 revert 的区别：一个改写历史，一个追加历史</li>
+          </ul>
+        </div>
+      </div>
+      <p class="lbl" style="font-size:12px;color:var(--ink3);margin:14px 0 0">验收标准</p>
+      <ul class="check">
+        <li>遇到冲突不慌，能判断该留哪一段</li>
+        <li>知道 <code>reset --hard</code> 危险，动手前会先确认 <code>reflog</code> 能救回来</li>
+        <li>养成"新想法先开分支"的肌肉记忆</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="stage">
+    <div class="badge b3">③</div>
+    <div style="flex:1">
+      <h3>远程与协作：和别人一起写</h3>
+      <p class="meta">Day 7–10 · 约 3 小时 · 目标：独立完成 clone → 改 → PR 全流程</p>
+      <div class="grid2">
+        <div class="box">
+          <p class="lbl">要掌握的命令</p>
+          <ul>
+            <li>配 SSH key（一次搞定，之后免密）</li>
+            <li><code>git clone</code> 拉仓库</li>
+            <li><code>git remote -v</code> 看远端</li>
+            <li><code>git push</code> / <code>git pull</code></li>
+            <li><code>git fetch</code> 只看不合并</li>
+            <li>Fork + Pull Request</li>
+            <li>VS Code 图形化界面（辅助，不替代命令行）</li>
+          </ul>
+        </div>
+        <div class="box">
+          <p class="lbl">动手任务（必做）</p>
+          <ul>
+            <li>注册 GitHub，配好 SSH，把本地仓库推上去</li>
+            <li>在电脑另一个目录再 clone 一份，改完 push，回到原目录 pull 下来</li>
+            <li>Fork 任意一个开源仓库（文档类即可），改个错别字，提第一个 PR</li>
+            <li>体验一次"push 被拒绝 → 先 pull → 再 push"</li>
+          </ul>
+        </div>
+      </div>
+      <p class="lbl" style="font-size:12px;color:var(--ink3);margin:14px 0 0">验收标准</p>
+      <ul class="check">
+        <li>能说清 <code>pull = fetch + merge</code></li>
+        <li>能独立走完：开分支 → 提交 → push → 提 PR → 合并</li>
+        <li>知道 .gitignore 要写在第一次 commit 之前才最省事</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="stage">
+    <div class="badge b4">④</div>
+    <div style="flex:1">
+      <h3>真实项目：用起来才算学会</h3>
+      <p class="meta">Day 11–14 · 约 3 小时 · 目标：把 Git 变成默认工作方式</p>
+      <div class="grid2">
+        <div class="box">
+          <p class="lbl">选一个真实载体</p>
+          <ul>
+            <li>一门课的编程作业 / 实验报告</li>
+            <li>你正在写的 Python 数据处理脚本</li>
+            <li>小组项目或大创的雏形仓库</li>
+            <li>一份持续更新的读书 / 文献笔记库</li>
+          </ul>
+        </div>
+        <div class="box">
+          <p class="lbl">配套动作</p>
+          <ul>
+            <li>写一份 README：项目是什么、怎么跑</li>
+            <li>约定分支命名：<code>main</code> / <code>dev</code> / <code>feat-xxx</code></li>
+            <li>约定 commit 规范：动词开头，一行说清</li>
+            <li>把队友拉进来，真实产生一次冲突并解决</li>
+          </ul>
+        </div>
+      </div>
+      <p class="lbl" style="font-size:12px;color:var(--ink3);margin:14px 0 0">验收标准</p>
+      <ul class="check">
+        <li>连续 7 天有 commit 记录（GitHub 贡献图出现绿色）</li>
+        <li>能把 <code>add / commit / push</code> 三件套讲给没学过的同学听懂</li>
+        <li>遇到报错先看提示信息，而不是直接复制粘贴问人</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2>四、应用场景对照表</h2>
+<p>这是最该记住的一张表——把"什么情况"和"用什么"直接对上号，比背命令参数有用得多。</p>
+<table>
+  <tr><th style="width:22%">场景</th><th style="width:34%">Git 怎么帮你</th><th>你会用到的命令</th></tr>
+  <tr>
+    <td><b>报告 / 论文反复改</b></td>
+    <td>每改完一节就提交一次，导师说"还是上一版好"时能一秒切回去</td>
+    <td><code>git diff</code> · <code>git log -p</code> · <code>git checkout &lt;commit&gt; -- 文件</code></td>
+  </tr>
+  <tr>
+    <td><b>数据处理脚本</b></td>
+    <td>脚本进 Git，原始数据和大文件不进；脚本版本与出图结果一一对应，结果可复现</td>
+    <td><code>.gitignore</code> · <code>git tag v1.0</code> · <code>git log</code></td>
+  </tr>
+  <tr>
+    <td><b>小组作业 / 大创</b></td>
+    <td>每人一条分支并行写，用 PR 合并，队友互相 review，谁改了什么一目了然</td>
+    <td><code>git switch -c feat-xxx</code> · <code>git push -u origin</code> · Pull Request</td>
+  </tr>
+  <tr>
+    <td><b>改崩了 / 误删文件</b></td>
+    <td>只要曾经 commit 过，几乎都能找回来——Git 最难丢的是历史</td>
+    <td><code>git reflog</code> · <code>git reset</code> · <code>git restore</code></td>
+  </tr>
+  <tr>
+    <td><b>宿舍电脑 / 实验室机器切换</b></td>
+    <td>一处 push，另一处 pull，不用 U 盘和微信传文件</td>
+    <td><code>git push</code> · <code>git pull</code> · <code>git clone</code></td>
+  </tr>
+  <tr>
+    <td><b>参与开源 / 建个人主页</b></td>
+    <td>Fork 别人的仓库改完提 PR；自己的项目攒起来就是简历</td>
+    <td>Fork · <code>git remote add upstream</code> · Pull Request</td>
+  </tr>
+  <tr>
+    <td><b>作业怕被抄 / 未公开内容</b></td>
+    <td>用私有仓库，一样享受版本管理，不影响提交作业</td>
+    <td>Private repository · <code>git remote set-url</code></td>
+  </tr>
+</table>
+
+<h2>五、只需要先背这 9 个命令</h2>
+<p>二八定律在 Git 上特别明显：这 9 个命令覆盖你 80% 的日常操作，其余的用到再查。</p>
+<pre><code>git status              看现在是什么状态（不知道干啥就先敲这个）
+git add &lt;文件&gt;          把改动放进暂存区
+git commit -m "说明"     提交一次快照
+git log --oneline       看提交历史
+git diff                看具体改了什么
+git restore &lt;文件&gt;      撤销工作区的改动
+git switch -c &lt;分支名&gt;   新建并切换到分支
+git merge &lt;分支名&gt;       把分支合进来
+git push / git pull     和远程同步</code></pre>
+<p>再加一个救命命令：<code>git reflog</code>——它记录了你在这台机器上做过的每一次 HEAD 移动，是几乎所有误操作的后悔药。</p>
+
+<h2>六、新手最常踩的六个坑</h2>
+<div class="warn">
+  <p><b>1. commit 信息写"修改""更新"</b> —— 三个月后你完全看不懂。改成"修复温度单位换算错误""补充 2024 年航次数据"。</p>
+  <p><b>2. 把数据集 / 大文件推上去</b> —— 仓库会变得极难 clone。第一次 commit 前就写好 <code>.gitignore</code>，大文件用 Git LFS 或单独存。</p>
+  <p><b>3. 直接在 main 上开发</b> —— 一旦写崩就是灾难。任何新想法都先开分支，跑通了再合并。</p>
+  <p><b>4. 随手 <code>reset --hard</code></b> —— 未提交的改动会直接消失。回退前先 <code>git stash</code> 或确认改动已 commit。</p>
+  <p><b>5. 看到 conflict 就慌</b> —— 冲突标记 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> 和 <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> 之间只是两个版本的同一段内容，删掉标记、保留你要的，然后 <code>add</code> + <code>commit</code> 即可。</p>
+  <p><b>6. 不 pull 就 push</b> —— 必然被拒。正确顺序永远是：先 <code>pull</code>，再 <code>push</code>。</p>
+</div>
+
+<h2>七、时间控制的三条原则</h2>
+<div class="grid2">
+  <div class="box">
+    <p class="lbl">固定时长，不做完也停</p>
+    <p style="margin:0;font-size:14px">每天 45–60 分钟，到点就停。Git 是肌肉记忆，靠的是连续多天反复用，不是一次性学通宵。</p>
+  </div>
+  <div class="box">
+    <p class="lbl">学完立刻用，不用就忘</p>
+    <p style="margin:0;font-size:14px">每学一个命令，当天必须在一个真实文件上敲一遍。只看教程不动手，两周后归零。</p>
+  </div>
+  <div class="box">
+    <p class="lbl">跳过高级话题</p>
+    <p style="margin:0;font-size:14px">rebase 交互式变基、cherry-pick、submodule、钩子脚本——大一阶段全部跳过，遇到再说。</p>
+  </div>
+</div>
+
+<h3>如果只有 3 天（压缩版）</h3>
+<table>
+  <tr><th style="width:18%">时间</th><th style="width:26%">内容</th><th>产出的能力</th></tr>
+  <tr><td><b>第 1 天 · 2h</b></td><td>安装配置 + 四区模型 + add/commit/log/diff</td><td>能给自己的文件做版本管理</td></tr>
+  <tr><td><b>第 2 天 · 2h</b></td><td>分支 + 合并冲突 + reset/reflog</td><td>敢改、敢回退、丢不了东西</td></tr>
+  <tr><td><b>第 3 天 · 2h</b></td><td>GitHub + SSH + clone/push/pull + 第一个 PR</td><td>能和人协作、有公开作品</td></tr>
+</table>
+<p style="font-size:14px;color:var(--ink2)">压缩版能让你"能用"，但缺少第四阶段的真实项目打磨，容易在第一次真实冲突时卡住。有时间还是走完十四天。</p>
+
+<h2>八、十四天打卡表</h2>
+<p>勾掉一项就往前走一步，进度会自动存在这台电脑上。</p>
+<div class="card" id="checklist">
+  <div class="dayline"><span class="d">Day 1</span><input type="checkbox" id="d1"><label for="d1">装好 Git，配好用户名邮箱，建立第一个仓库并提交 3 次</label></div>
+  <div class="dayline"><span class="d">Day 2</span><input type="checkbox" id="d2"><label for="d2">用 status / diff / log 看懂仓库状态，写好 .gitignore</label></div>
+  <div class="dayline"><span class="d">Day 3</span><input type="checkbox" id="d3"><label for="d3">故意删文件再 restore 找回，做到"不怕改坏"</label></div>
+  <div class="dayline"><span class="d">Day 4</span><input type="checkbox" id="d4"><label for="d4">开分支、切分支、在分支上提交，最后合并回 main</label></div>
+  <div class="dayline"><span class="d">Day 5</span><input type="checkbox" id="d5"><label for="d5">制造一次冲突并手工解决它</label></div>
+  <div class="dayline"><span class="d">Day 6</span><input type="checkbox" id="d6"><label for="d6">练 stash、reset 三档、reflog 找回，搞清 reset 与 revert 区别</label></div>
+  <div class="dayline"><span class="d">Day 7</span><input type="checkbox" id="d7"><label for="d7">注册 GitHub，配好 SSH key</label></div>
+  <div class="dayline"><span class="d">Day 8</span><input type="checkbox" id="d8"><label for="d8">把本地仓库 push 上去，再从别处 clone 回来</label></div>
+  <div class="dayline"><span class="d">Day 9</span><input type="checkbox" id="d9"><label for="d9">双目录模拟两人协作，体验 pull → 冲突 → 解决 → push</label></div>
+  <div class="dayline"><span class="d">Day 10</span><input type="checkbox" id="d10"><label for="d10">Fork 一个仓库，提交人生第一个 Pull Request</label></div>
+  <div class="dayline"><span class="d">Day 11</span><input type="checkbox" id="d11"><label for="d11">选定一个真实项目（作业 / 脚本 / 笔记库）纳入 Git</label></div>
+  <div class="dayline"><span class="d">Day 12</span><input type="checkbox" id="d12"><label for="d12">写 README，定下分支与 commit 规范</label></div>
+  <div class="dayline"><span class="d">Day 13</span><input type="checkbox" id="d13"><label for="d13">拉一位队友进来，真实产生并解决一次协作冲突</label></div>
+  <div class="dayline"><span class="d">Day 14</span><input type="checkbox" id="d14"><label for="d14">复盘：把三件套讲给同学听，并规划下一个要放进 Git 的项目</label></div>
+</div>
+
+<h2>九、学完之后</h2>
+<p>十四天结束时，你不应该去学更多命令，而是去做更多项目。接下来的优先级：</p>
+<ul>
+  <li>把下学期所有编程类作业默认放进 Git，让 commit 变成本能</li>
+  <li>给实验室 / 课题组的数据处理流程建一个带 README 的仓库，这就是科研可复现性的起点</li>
+  <li>大创或 URF 立项时，直接在第一天就建仓库、拉队友进来</li>
+  <li>等到需要时再回头学：交互式 rebase 整理提交历史、cherry-pick 挑提交、tag 打版本、submodule 管子项目</li>
+</ul>
+
+<div class="note">
+  <p><b>一句话记住这套路线：</b>前三天学会"不丢东西"，第四到六天学会"敢乱改"，第七到十天学会"和人一起写"，最后四天把它变成你的默认工作方式。</p>
+</div>
+
+<footer>Git 十四天学习路线 · 大一新生版 · 每天 45–60 分钟 · 2026</footer>
+
+</div>
+<script>
+  var boxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+  boxes.forEach(function (b) {
+    var saved = localStorage.getItem('git14-' + b.id);
+    if (saved === '1') b.checked = true;
+    b.addEventListener('change', function () {
+      localStorage.setItem('git14-' + b.id, b.checked ? '1' : '0');
+    });
+  });
+</script>
+</body>
+</html>
